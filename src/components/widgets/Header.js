@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
+  const navigate = useNavigate()
   const [wallet, setWallet] = useState('')
   const [balance, setBalance] = useState('')
   const json = require('../../assets/chains.json')
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    window.location.reload()
+  }
+  
   useEffect(() => {
     window.ethereum.on('accountsChanged', function (accounts) {
       setWallet(accounts[0])
@@ -25,7 +32,7 @@ export function Header() {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
-    setWallet(address)
+    setWallet(address);
   }
 
   const getBalance = async () => {
@@ -43,8 +50,7 @@ export function Header() {
     const detail = json.find(item => item.chainId === chainId)
     return detail
   }
-
-  console.log(wallet == '');
+  
   return (
     <header>
       <h1>Sertifikat</h1>
@@ -53,6 +59,8 @@ export function Header() {
         <p>{wallet}</p>
         <p>{balance}</p>
       </div>
+      <button onClick={handleLogout}>
+        Logout</button>
     </header>
   )
 }

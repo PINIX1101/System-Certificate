@@ -19,7 +19,8 @@ export function LoginPage() {
   })
 
   const handleLogin = (e) => {
-    navigate('/dashboard')
+    sessionStorage.setItem('session',1)
+    navigate('/dashboard');
   }
 
   const connectWallet = async (e) => {
