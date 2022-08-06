@@ -5,12 +5,35 @@
 
 .login-left {
   width: 55%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   margin-right: 60px;
-  margin-top: 8%;
+}
+
+.login-options {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin: 10px;
+  padding-left: 20px;
+}
+
+.login-options button, .button {
+  width: 25%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #919191;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
 }
 
 form {
@@ -23,7 +46,7 @@ input[type=text] {
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 12px 20px;
+  padding: 12px 15px;
   margin: 8px 0;
   box-sizing: border-box;
 }

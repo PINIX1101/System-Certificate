@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
-import bg from '../assets/image/login-bg.jpg'
+import bg from '../assets/image/login-bg-2.jpg'
 import { Link, useNavigate } from 'react-router-dom';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 
-export function LoginPage() {
+export function LoginDosenPage() {
   const navigate = useNavigate()
-  const [ , setNim] = useState('')
+  const [ , setNip] = useState('')
   const [ , setNama] = useState('')
   const [wallet, setWallet] = useState('')
 
@@ -35,13 +35,13 @@ export function LoginPage() {
     <div className='login'>
       <div className='login-left'>
         <div className='login-options'>
-          <Link to='/dosen' className='button'>Masuk sebagai Dosen</Link>
+          <Link to='/' className='button'>Masuk sebagai Mahasiswa</Link>
           <Link to='/test' className='button' style={{backgroundColor: "cadetBlue"}}>Tes DID</Link>
         </div>
         <form onSubmit={handleLogin} className='login-form'>
           <h1>Sign In</h1>
-          <label for='nim'>NIM</label>
-          <input required type={'text'} name='nim' id='nim' placeholder='NIM Anda' onChange={(e) => setNim(e.target.value)}/>
+          <label for='nip'>NIP</label>
+          <input required type={'text'} name='nip' id='nip' placeholder='NIP Anda' onChange={(e) => setNip(e.target.value)}/>
           <label for='nama'>Nama</label>
           <input required type={'text'} name='nama' id='nama' placeholder='Nama Anda' onChange={(e) => setNama(e.target.value)}/>
           <label for='nama'>Wallet Address</label>
