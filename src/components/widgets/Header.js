@@ -43,7 +43,8 @@ export function Header() {
     const detail = json.find(item => item.chainId === chainId)
     return detail
   }
-  
+
+  console.log(wallet == '');
   return (
     <header>
       <h1>Sertifikat</h1>
