@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
 import bg from '../assets/image/login-bg.jpg'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 
 export function LoginPage() {
-  const navigate = useNavigate()
+  const role = sessionStorage.getItem('role');
   const [ , setNim] = useState('')
   const [ , setNama] = useState('')
   const [wallet, setWallet] = useState('')
@@ -20,7 +20,17 @@ export function LoginPage() {
 
   const handleLogin = (e) => {
     sessionStorage.setItem('session',1)
-    navigate('/dashboard');
+    window.location.reload()
+  }
+
+  const changeRole = () => {
+    if(role=='dosen'){
+      sessionStorage.setItem('role','mahasiswa')
+    }
+    else if (role=='mahasiswa'){
+      sessionStorage.setItem('role','dosen')
+    };
+    window.location.reload()
   }
 
   const connectWallet = async (e) => {
@@ -36,12 +46,16 @@ export function LoginPage() {
     <div className='login'>
       <div className='login-left'>
         <div className='login-options'>
-          <Link to='/dosen' className='button'>Masuk sebagai Dosen</Link>
+          <button className='button' onClick={changeRole}>Masuk sebagai {role=='dosen'? 'Mahasiswa' : 'Dosen'}</button>
           <Link to='/test' className='button' style={{backgroundColor: "cadetBlue"}}>Tes DID</Link>
         </div>
         <form onSubmit={handleLogin} className='login-form'>
           <h1>Sign In</h1>
+          {role=='dosen'?
+          <label for='nip'>NIP</label>
+            :
           <label for='nim'>NIM</label>
+          }
           <input required type={'text'} name='nim' id='nim' placeholder='NIM Anda' onChange={(e) => setNim(e.target.value)}/>
           <label for='nama'>Nama</label>
           <input required type={'text'} name='nama' id='nama' placeholder='Nama Anda' onChange={(e) => setNama(e.target.value)}/>

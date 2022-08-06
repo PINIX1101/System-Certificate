@@ -6,6 +6,7 @@ import Test from './components/TestPage';
 import { MhsPage } from './components/MhsPage';
 import { LoginDosenPage } from './components/LoginDosenPage';
 import { WebBlocker } from './components/WebBlocker';
+import { Header } from './components/widgets/Header';
 
 function App() {
   const session = sessionStorage.getItem('session');
@@ -20,11 +21,14 @@ function App() {
       {!session ?
         <LoginPage />
         :
-        <Routes>
-          <Route path="/test" element={<Test />} />
-          <Route path="/dashboard" element={<MhsPage/>} />
-          <Route path="/dosen" element={<LoginDosenPage/>} />
-        </Routes>
+        <div>
+          <Header />
+          <Routes>
+            <Route path="/test" element={<Test />} />
+            <Route path="/" element={<MhsPage/>} />
+            <Route path="/dosen" element={<LoginDosenPage/>} />
+          </Routes>
+        </div>
       }
     </div>
   }
