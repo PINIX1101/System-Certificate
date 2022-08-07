@@ -3,12 +3,12 @@ import '../assets/styles/Login.css'
 
 export function WebBlocker() {
   const handleDosen = () => {
-    sessionStorage.setItem('role','dosen')
+    sessionStorage.setItem('role','Dosen')
     window.location.reload()
   }
 
   const handleMahasiswa = () => {
-    sessionStorage.setItem('role','mahasiswa')
+    sessionStorage.setItem('role','Mahasiswa')
     window.location.reload()
   }
   

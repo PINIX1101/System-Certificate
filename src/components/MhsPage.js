@@ -5,11 +5,12 @@ import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
 
 export function MhsPage() {
+  const idname = sessionStorage.getItem('idname');
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
   const role = sessionStorage.getItem('role');
-  const [wallet, setWallet] = useState('')
-
+  const [wallet, setWallet] = useState('');
+  
   useEffect(() => {
     window.ethereum.on('accountsChanged', function (accounts) {
       setWallet(accounts[0])
@@ -36,22 +37,10 @@ export function MhsPage() {
 
   return (
     <div className='mhs-page'>
-      <form onSubmit={handleSubmit} style={{width: '60%', margin: 'auto'}}>
-          <h1>Set DID</h1>
-        <div>
-          <label for='name'>Nama</label>
-          <div className='input-group'>
-             <input required value={name || ''} onChange={(e) => setName(e.target.value)} type="text" name="name" placeholder="Nama" />
-          </div>
-        </div>
-        <div>
-          <label for='nim'>NIM</label>
-            <div className='input-group'>
-              <input required value={nim || ''} onChange={(e) => setNim(e.target.value)} type="text" name="nim" placeholder="NIM" />
-            </div>
-        </div>
-        <button type='submit' className='button'>Save</button>
-        </form>
+      {role==='Mahasiswa' ? 
+      <div style={{textAlign: 'center'}}><h1>Tidak Ada Sertifikat</h1></div>
+      :
+      <button style={{margin: 'auto', marginTop: '50px'}} class='button'><h3>Buat Sertifikat</h3></button>}
     </div>
   )
 }

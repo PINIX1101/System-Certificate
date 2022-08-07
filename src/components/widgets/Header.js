@@ -4,6 +4,8 @@ import { ethers } from 'ethers';
 import '../../assets/styles/Header.css'
 
 export function Header() {
+  const idname = sessionStorage.getItem('idname');
+  const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('')
   const [balance, setBalance] = useState('')
   const json = require('../../assets/chains.json')
@@ -52,9 +54,9 @@ export function Header() {
   
   return (
     <header>
-      <h1>Sertifikat</h1>
+      <h1>{role}</h1>
       <div className='account'>
-        <h3>Lorem Ipsum</h3>
+        <h3>{idname}</h3>
         <p>{wallet}</p>
         <p>{balance}</p>
       <button onClick={handleLogout}>
