@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
+import '../../assets/styles/Header.css'
 
 export function Header() {
   const [wallet, setWallet] = useState('')
@@ -56,9 +57,9 @@ export function Header() {
         <h3>Lorem Ipsum</h3>
         <p>{wallet}</p>
         <p>{balance}</p>
-      </div>
       <button onClick={handleLogout}>
         Logout</button>
+      </div>
     </header>
   )
 }
