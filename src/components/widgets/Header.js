@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
-import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
-  const navigate = useNavigate()
   const [wallet, setWallet] = useState('')
   const [balance, setBalance] = useState('')
   const json = require('../../assets/chains.json')

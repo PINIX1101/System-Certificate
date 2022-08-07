@@ -9,91 +9,65 @@ import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
 import { DID } from 'dids';
 import { IDX } from '@ceramicstudio/idx';
 
-const endpoint = 'https://ceramic-clay.3boxlabs.com';
+const endpoint = "https://ceramic-clay.3boxlabs.com"
 
 function Test() {
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [loaded, setLoaded] = useState(false);
+  const [name, setName] = useState('')
+  const [image, setImage] = useState('')
+  const [loaded, setLoaded] = useState(false)
 
   async function connect() {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-
-    console.log('from web3modal: ', address);
-
-    return address;
+    const addresses = await window.ethereum.request({
+      method: 'eth_requestAccounts'
+    })
+    return addresses
   }
 
   async function readProfile() {
-    if(typeof window.ethereum !== 'undefined') {
-      const address = await connect();
+    const [address] = await connect()
+    const ceramic = new CeramicClient(endpoint)
+    const idx = new IDX({ ceramic })
 
-      const ceramic = new CeramicClient(endpoint);
-      const idx = new IDX({ ceramic });
-
-      if (typeof address !== 'undefined') {
-        console.log('reading:', address);
-
-        try {
-          const data = await idx.get(
-            'basicProfile',
-            `${address}@eip155:1`
-          );
-          console.log('data:', data);
-          if (data.name) setName(data.name);
-          if (data.avatar) setImage(data.avatar);
-        } catch (error) {
-          console.log('error: ', error);
-          setLoaded(true);
-        }
-      } else {
-        window.alert('Please login with MetaMask');
-      }
-    } else {
-      window.alert('Please install MetaMask');
+    try {
+      const data = await idx.get(
+        'basicProfile',
+        `${address}@eip155:1`
+      )
+      console.log('data: ', data)
+      if (data.name) setName(data.name)
+      if (data.avatar) setImage(data.avatar)
+    } catch (error) {
+      console.log('error: ', error)
+      setLoaded(true)
     }
   }
 
   async function updateProfile() {
-    if(typeof window.ethereum !== 'undefined') {
-      const address = await connect();
+    const [address] = await connect()
+    const ceramic = new CeramicClient(endpoint)
+    const threeIdConnect = new ThreeIdConnect()
+    const provider = new EthereumAuthProvider(window.ethereum, address)
 
-      const ceramic = new CeramicClient(endpoint);
-      const threeIdConnect = new ThreeIdConnect();
+    await threeIdConnect.connect(provider)
 
-      if (typeof address !== 'undefined') {
-        const provider = new EthereumAuthProvider(window.ethereum, address);
-
-        console.log('writing:', address);
-
-        await threeIdConnect.connect(provider);
-
-        const did = new DID({
-          provider: threeIdConnect.getDidProvider(),
-          resolver: { ...ThreeIdResolver.getResolver(ceramic) },
-        });
-
-        ceramic.setDID(did);
-        await ceramic.did.authenticate();
-
-        const idx = new IDX({ ceramic });
-
-        await idx.set('basicProfile', {
-          name,
-          avatar: image,
-        });
-
-        console.log('Profile updated!');
-      } else {
-        window.alert('Please install MetaMask');
+    const did = new DID({
+      provider: threeIdConnect.getDidProvider(),
+      resolver: {
+        ...ThreeIdResolver.getResolver(ceramic)
       }
-    } else {
-      window.alert('Please install MetaMask');
-    }
+    })
+
+    ceramic.setDID(did)
+    await ceramic.did.authenticate()
+
+    const idx = new IDX({ ceramic })
+
+    await idx.set('basicProfile', {
+      name,
+      avatar: image
+    })
+
+    console.log("Profile updated!")
   }
 
   return (
@@ -104,8 +78,8 @@ function Test() {
       <button onClick={readProfile}>Read Profile</button>
 
       { name && <h3>{name}</h3> }
-      { image && <img style={{ width: '400px' }} src={image} alt='nft'/> }
-      { (!image && !name && loaded) && <h4>No profile, please create one...</h4> }
+      { image && <img style={{ width: '400px' }} src={image} /> }
+      {(!image && !name && loaded) && <h4>No profile, please create one...</h4>}
     </div>
   );
 }

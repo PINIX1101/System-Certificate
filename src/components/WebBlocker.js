@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../assets/styles/Login.css'
-import bg from '../assets/image/login-bg.jpg'
-import { Link, useNavigate } from 'react-router-dom';
-import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
 
 export function WebBlocker() {
-  const navigate = useNavigate()
-
   const handleDosen = () => {
     sessionStorage.setItem('role','dosen')
     window.location.reload()
