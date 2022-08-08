@@ -23,7 +23,7 @@ describe("DigitalCertificate", function () {
     console.log("Name:           ", name);
     console.log("Certificate Number:", number);
     console.log("Date:      ", date);
-    console.log("Organization Date:", organization);
+    console.log("Organization:", organization);
     const createCertificateTx = await digitalCertificate.createCertificate(addr1.address, name, number, date, organization);
     await createCertificateTx.wait();
   });

@@ -34,7 +34,7 @@ contract DigitalCertificate is ERC721URIStorage, Ownable {
             '" }, { "trait_type": "Tanggal", "value": "',
             date,
             '" }, { "trait_type": "Organisasi", "value": "',
-            Organization,
+            organization,
             '" } ]}'
           )
         )

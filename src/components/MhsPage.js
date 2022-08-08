@@ -3,8 +3,10 @@ import '../assets/styles/Login.css'
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function MhsPage() {
+  const navigate = useNavigate();
   const idname = sessionStorage.getItem('idname');
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
@@ -40,7 +42,10 @@ export function MhsPage() {
       {role==='Mahasiswa' ? 
       <div style={{textAlign: 'center'}}><h1>Tidak Ada Sertifikat</h1></div>
       :
-      <button style={{margin: 'auto', marginTop: '50px'}} class='button'><h3>Buat Sertifikat</h3></button>}
+      <Link to='/CreateCertificate' class='button' style={{margin: 'auto', marginTop: '50px'}}>
+      <h3>Buat Sertifikat</h3>
+      </Link>
+      }
     </div>
   )
 }

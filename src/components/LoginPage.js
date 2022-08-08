@@ -5,7 +5,7 @@ import bg from '../assets/image/login-bg.jpg'
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 
-export function LoginPage(id) {
+export function LoginPage(props) {
   const [dids, setDids] = useState(null); 
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('')
@@ -16,7 +16,7 @@ export function LoginPage(id) {
     window.ethereum.on('accountsChanged', function (accounts) {
       setWallet(accounts[0])
     });
-    }, [id])
+    }, [props.id])
   
   const getDids = async (address) => { 
    try { 

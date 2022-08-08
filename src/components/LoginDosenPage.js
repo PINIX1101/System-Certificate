@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
-import bg from '../assets/image/login-bg-2.jpg'
+import bg from '../assets/image/login-bg.jpg'
 import { Link, useNavigate } from 'react-router-dom';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
