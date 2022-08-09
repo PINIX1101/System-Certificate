@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { LoginPage } from './components/LoginPage';
 import Test from './components/TestPage';
-import { MhsPage } from './components/MhsPage';
+import { MhsPage } from './components/Home';
 import { CreateCertificate } from './components/CreateCertificate';
 import { DidsCheck } from './components/DidsCheck';
 import { LoginDosenPage } from './components/LoginDosenPage';

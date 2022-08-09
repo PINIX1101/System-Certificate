@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
 
-export function MhsPage() {
+export function Home() {
   const navigate = useNavigate();
   const idname = sessionStorage.getItem('idname');
   const [name, setName] = useState('');
