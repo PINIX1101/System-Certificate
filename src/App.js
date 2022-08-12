@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { LoginPage } from './components/LoginPage';
 import Test from './components/TestPage';
-import { MhsPage } from './components/Home';
+import { Home } from './components/Home';
 import { CreateCertificate } from './components/CreateCertificate';
 import { DidsCheck } from './components/DidsCheck';
 import { LoginDosenPage } from './components/LoginDosenPage';
@@ -31,7 +31,7 @@ function App() {
           <div>
             <Header />
             <Routes>
-              <Route path="/" element={<MhsPage/>} />
+              <Route path="/" element={<Home/>} />
               <Route path="/createcertificate" element={<CreateCertificate/>} />
               <Route path="/test" element={<Test />} />
               <Route path="/dosen" element={<LoginDosenPage/>} />
