@@ -1,5 +1,7 @@
 import React from 'react';
 import '../assets/styles/Login.css'
+import teacher from '../assets/image/teacher.png'
+import student from '../assets/image/student.png'
 
 export function WebBlocker() {
   const handleDosen = () => {
@@ -14,8 +16,16 @@ export function WebBlocker() {
   
   return (
     <div className='web-blocker'>
-      <button className='button' onClick={handleDosen}>Masuk sebagai Dosen</button>
-      <button className='button' style={{backgroundColor: "cadetBlue"}} onClick={handleMahasiswa}>Masuk sebagai Mahasiswa</button>
+      <div className='login'>
+        <button className='button-login' onClick={handleDosen}>
+          <img src={teacher} alt='teacher' />
+          <h2>Masuk sebagai Dosen</h2>
+        </button>
+        <button className='button-login' style={{backgroundColor: "cadetBlue"}} onClick={handleMahasiswa}>
+          <img src={student} alt='student' />
+          <h2>Masuk sebagai Mahasiswa</h2>
+        </button>
+      </div>
     </div>
   )
 }

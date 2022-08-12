@@ -10,3 +10,43 @@ header {
 header h1, h2, h3, p {
   margin: 0;
 }
+
+.account {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-logout {
+  position: absolute;
+  bottom: -65px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.dropdown-logout button {
+  border: none;
+  border-radius: 5px;
+  background-color: #dfdede;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px 60px;
+}
+
+.account:hover {
+  background-color: #f5f5f5;
+}
+
+.account:active {
+  background-color: #e7e6e6;
+}
+
+.dropdown-logout button:active {
+  background-color: #bebebe;
+}

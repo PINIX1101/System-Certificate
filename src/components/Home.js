@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
+import '../assets/styles/home.css'
+
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
+import { Certificate } from './widgets/Certificate';
 
 export function Home() {
   const navigate = useNavigate();
@@ -40,7 +43,20 @@ export function Home() {
   return (
     <div className='mhs-page'>
       {role==='Mahasiswa' ? 
-      <div style={{textAlign: 'center'}}><h1>Tidak Ada Sertifikat</h1></div>
+      <div style={{textAlign: 'center'}}>
+        <h1 style={{margin: 0}}>Tidak Ada Sertifikat</h1>
+        <div className='sertifikat-list'>
+          <Certificate />
+          <Certificate />
+          <Certificate />
+          <Certificate />
+          <Certificate />
+          <Certificate />
+          <Certificate />
+          <Certificate />
+        </div>
+
+      </div>
       :
       <Link to='/CreateCertificate' class='button' style={{margin: 'auto', marginTop: '50px'}}>
       <h3>Buat Sertifikat</h3>

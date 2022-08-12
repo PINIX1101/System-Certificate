@@ -1,0 +1,52 @@
+.mhs-page {
+  background-color: #f7f7f7;
+  height: 100vh;
+}
+
+.sertifikat-list {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sertif-grid {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sertif-grid h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(94, 94, 94);
+  margin-bottom: 10px;
+}
+
+.sertif-grid h3 {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+}
+
+.sertif-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 15px 20px;
+}
+
+.sertif-grid img {
+  width: 100%; /* or any custom size */
+  height: 100%; 
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  object-fit: contain;
+}

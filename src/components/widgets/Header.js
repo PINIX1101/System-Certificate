@@ -8,6 +8,7 @@ export function Header() {
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('')
   const [balance, setBalance] = useState('')
+  const [logout, setLogout] = useState(false)
   const json = require('../../assets/chains.json')
 
   const handleLogout = () => {
@@ -55,12 +56,15 @@ export function Header() {
   return (
     <header>
       <h1>{role}</h1>
-      <div className='account'>
+      <div className='account' onClick={() => setLogout(!logout)}>
         <h3>{idname}</h3>
         <p>{wallet}</p>
         <p>{balance}</p>
-      <button onClick={handleLogout}>
-        Logout</button>
+        <div className='dropdown-logout' style={{cursor: 'pointer', display: !logout? 'none': 'block'}}>
+          <button onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
     </header>
   )
