@@ -72,6 +72,16 @@ input[type=text] {
   box-sizing: border-box;
 }
 
+input[type=date] {
+  width: calc(100% + 50px);
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 12px 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
 input {
   width: fit-content;
 }

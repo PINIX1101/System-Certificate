@@ -8,14 +8,15 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
 import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
 import { DID } from 'dids';
 import { IDX } from '@ceramicstudio/idx';
+import { Link, useNavigate } from 'react-router-dom';
 
 const endpoint = 'https://ceramic-clay.3boxlabs.com';
 
-export function DidsCheck(id) {
+export function Transkrip(id) {
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
   const [tanggallahir, setTanggallahir] = useState('');
-  const [email, setEmail] = useState('');
+  const [emailtujuan, setEmailtujuan] = useState('');
   const [image, setImage] = useState('');
   const [wallet, setWallet] = useState('')
   const [dids, setDids] = useState(null); 
@@ -57,7 +58,7 @@ export function DidsCheck(id) {
       name: name, 
       nim: nim, 
       tanggallahir: tanggallahir,
-      email: email,
+      emailtujuan: emailtujuan,
    });
 }
 
@@ -123,32 +124,14 @@ export function DidsCheck(id) {
   return (
     <div className='didscheck'>
       <form onSubmit={handleSubmit} style={{width: '60%', margin: 'auto'}}>
-          <h1>Set DID</h1>
+          <h1>Kirim Transkrip</h1>
         <div>
-          <label for='name'>Nama</label>
-          <div className='input-group'>
-             <input required value={name || ''} onChange={(e) => setName(e.target.value)} type="text" name="name" placeholder="Nama" />
-          </div>
-        </div>
-        <div>
-          <label for='nim'>NIM</label>
+          <label for='emailtujuan'>Silahkan tulis email tujuan</label>
             <div className='input-group'>
-              <input required value={nim || ''} onChange={(e) => setNim(e.target.value)} type="text" name="nim" placeholder="NIM" />
+              <input required value={emailtujuan || ''} onChange={(e) => setEmailtujuan(e.target.value)} type="text" name="emailtujuan" placeholder="Email Tujuan" />
             </div>
         </div>
-        <div>
-          <label for='nim'>Tanggal Lahir</label>
-            <div className='input-group'>
-              <input required value={tanggallahir || ''} onChange={(e) => setTanggallahir(e.target.value)} type="date" name="tanggallahir" placeholder="Tanggal Lahir" />
-            </div>
-        </div>
-        <div>
-          <label for='email'>Email</label>
-            <div className='input-group'>
-              <input required value={email || ''} onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="Email" />
-            </div>
-        </div>
-        <button type='submit' className='button'>Save</button>
+        <button type='submit' className='button'>Kirim</button>
         </form>
     </div>
   )

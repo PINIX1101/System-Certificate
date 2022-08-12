@@ -5,6 +5,7 @@ import { LoginPage } from './components/LoginPage';
 import Test from './components/TestPage';
 import { Home } from './components/Home';
 import { CreateCertificate } from './components/CreateCertificate';
+import { Transkrip } from './components/Transkrip';
 import { DidsCheck } from './components/DidsCheck';
 import { LoginDosenPage } from './components/LoginDosenPage';
 import { WebBlocker } from './components/WebBlocker';
@@ -33,6 +34,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/createcertificate" element={<CreateCertificate/>} />
+              <Route path="/Transkrip" element={<Transkrip/>} />
               <Route path="/test" element={<Test />} />
               <Route path="/dosen" element={<LoginDosenPage/>} />
             </Routes>
