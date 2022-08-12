@@ -16,6 +16,7 @@ describe("DigitalCertificate", function () {
     await digitalCertificate.deployed();
 
     let name = 'Salman';
+    let image = 'https://static.vecteezy.com/system/resources/previews/002/349/754/original/modern-elegant-certificate-template-free-vector.jpg';
     let number = 'A7599272';
     let date = '1983-05-15';
     let organization = 'Teaching Factory Network';
@@ -24,7 +25,7 @@ describe("DigitalCertificate", function () {
     console.log("Certificate Number:", number);
     console.log("Date:      ", date);
     console.log("Organization:", organization);
-    const createCertificateTx = await digitalCertificate.createCertificate(addr1.address, name, number, date, organization);
+    const createCertificateTx = await digitalCertificate.createCertificate(addr1.address, name, image, number, date, organization);
     await createCertificateTx.wait();
   });
 });

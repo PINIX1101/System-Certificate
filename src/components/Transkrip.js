@@ -13,11 +13,8 @@ import { Link, useNavigate } from 'react-router-dom';
 const endpoint = 'https://ceramic-clay.3boxlabs.com';
 
 export function Transkrip(id) {
-  const [name, setName] = useState('');
-  const [nim, setNim] = useState('');
-  const [tanggallahir, setTanggallahir] = useState('');
+  const navigate = useNavigate();
   const [emailtujuan, setEmailtujuan] = useState('');
-  const [image, setImage] = useState('');
   const [wallet, setWallet] = useState('')
   const [dids, setDids] = useState(null); 
   const role = sessionStorage.getItem('role');
@@ -51,14 +48,9 @@ export function Transkrip(id) {
 }
   
   const handleSubmit = async () => { 
-   updateProfile()
-   sessionStorage.setItem('idname', name);
-   const { data, error } = await supabase.from('DID').upsert({ 
-      wallet: wallet,
-      name: name, 
-      nim: nim, 
-      tanggallahir: tanggallahir,
-      emailtujuan: emailtujuan,
+   const { data, error } = await supabase.from('Email Transkrip').upsert({ 
+      name: idname,
+      email_transkrip: emailtujuan, 
    });
 }
 
@@ -72,44 +64,6 @@ export function Transkrip(id) {
     console.log('from web3modal: ', address);
 
     return address;
-  }
-
-  async function updateProfile() {
-    if(typeof window.ethereum !== 'undefined') {
-      const address = await connect();
-
-      const ceramic = new CeramicClient(endpoint);
-      const threeIdConnect = new ThreeIdConnect();
-
-      if (typeof address !== 'undefined') {
-        const provider = new EthereumAuthProvider(window.ethereum, address);
-
-        console.log('writing:', address);
-
-        await threeIdConnect.connect(provider);
-
-        const did = new DID({
-          provider: threeIdConnect.getDidProvider(),
-          resolver: { ...ThreeIdResolver.getResolver(ceramic) },
-        });
-
-        ceramic.setDID(did);
-        await ceramic.did.authenticate();
-
-        const idx = new IDX({ ceramic });
-
-        await idx.set('basicProfile', {
-          name,
-          avatar: image,
-        });
-
-        console.log('Profile updated!');
-      } else {
-        window.alert('Please install MetaMask');
-      }
-    } else {
-      window.alert('Please install MetaMask');
-    }
   }
   
   const connectWallet = async (e) => {
