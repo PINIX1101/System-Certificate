@@ -13,7 +13,9 @@ export function Header() {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    window.location.reload()
+    document.body.onclick = function() {
+      window.location.reload();
+    }
   }
   
   useEffect(() => {
@@ -24,6 +26,11 @@ export function Header() {
     window.ethereum.on("chainChanged", function(chain) {
       getBalance()
     });
+    document.body.onclick = function() {
+      if (logout) {
+        setLogout(false)
+      }
+    }
     connect();
     getBalance();
   })

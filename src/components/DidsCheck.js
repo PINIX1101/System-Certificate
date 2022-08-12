@@ -24,9 +24,9 @@ export function DidsCheck(id) {
   useEffect(() => {
     window.ethereum.on('accountsChanged', function (accounts) {
       setWallet(accounts[0])
+      getDids();
     });
     connectWallet();
-    getDids();
   }, [id])
 
   const getDids = async () => { 
