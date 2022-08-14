@@ -2,13 +2,11 @@ import './assets/styles/App.css';
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { LoginPage } from './components/LoginPage';
-import Test from './components/TestPage';
 import { Home } from './components/Home';
 import { CreateCertificate } from './components/CreateCertificate';
 import { CreateClass } from './components/CreateClass';
 import { Transkrip } from './components/Transkrip';
 import { DidsCheck } from './components/DidsCheck';
-import { LoginDosenPage } from './components/LoginDosenPage';
 import { WebBlocker } from './components/WebBlocker';
 import { Header } from './components/widgets/Header';
 
@@ -37,8 +35,6 @@ function App() {
               <Route path="/createcertificate" element={<CreateCertificate/>} />
               <Route path="/createclass" element={<CreateClass/>} />
               <Route path="/transkrip/:code" element={<Transkrip/>} />
-              <Route path="/test" element={<Test />} />
-              <Route path="/dosen" element={<LoginDosenPage/>} />
             </Routes>
           </div>
           }

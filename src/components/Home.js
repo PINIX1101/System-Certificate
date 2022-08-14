@@ -12,16 +12,14 @@ export function Home() {
   
   useEffect(() => {
     getCertificates();
+    getClasses();
   })
-
-  console.log(classes);
   
   async function getCertificates() { 
       try { 
          let { data, error, status } = await supabase 
             .from('Sertifikat') 
             .select()
-         
          if (error && status !== 406) { 
             throw error 
          } 
@@ -38,6 +36,7 @@ export function Home() {
          let { data, error, status } = await supabase 
             .from('Kelas') 
             .select()
+        
          if (error && status !== 406) { 
             throw error 
          } 
@@ -51,46 +50,40 @@ export function Home() {
 
   return (
     <div className='mhs-page'>
-    {role==='Mahasiswa' ? ''
-      :
-      <div>
+      <div className='create-data'>
         <Link to='/CreateCertificate' class='button' style={{margin: 'auto', marginTop: '50px'}}>
           <h3>Buat Sertifikat</h3>
         </Link>
         <Link to='/CreateClass' class='button' style={{margin: 'auto', marginTop: '50px'}}>
           <h3>Buat Kelas</h3>
         </Link>
-        <div className='list-kelas'>
-        <h3>Daftar Kelas</h3>
-          <table variant='simple'> 
-           <thead> 
-              <tr> 
-                 <th>Kode</th> 
-                 <th>Nama Kelas</th> 
-                 <th>Nama Dosen</th> 
-                 <th>Jumlah Pendaftar</th> 
-              </tr> 
-           </thead> 
-           <tbody> 
-           {classes && classes.map(function(q, i) { 
-              return ( 
-                 <tr> 
-                    <td> { q.classcode } </td> 
-                    <td> { q.classname } </td> 
-                    <td> { q.lecturername } </td> 
-                    <td> { q.count } </td> 
-                    </tr> 
-                 ); 
-              })} 
-           </tbody> 
-        </table> 
-        </div>
       </div>
-      }
-      <div style={{textAlign: 'center'}}>
-        <div className='sertifikat-list'>
-          {certificates && certificates.map(function(p, i) { 
-      return (
+      <div className='list-kelas'>
+        <h3>Daftar Kelas</h3>
+        <table variant='simple'> 
+         <thead> 
+            <tr> 
+               <th>Kode</th> 
+               <th>Nama Kelas</th> 
+               <th>Nama Dosen</th> 
+               <th>Jumlah Pendaftar</th> 
+            </tr> 
+         </thead> 
+         <tbody> 
+         {classes && classes.map(function(q, i) { 
+          return ( 
+             <tr> 
+                <td> { q.classcode } </td> 
+                <td> { q.classname } </td> 
+                <td> { q.lecturername } </td> 
+                <td> { q.count } </td> 
+                </tr> 
+             );})} 
+         </tbody> 
+        </table> 
+      </div>
+      <div className='sertifikat-list'>
+      {certificates && certificates.map(function(p, i) { return (
         <Certificate 
           code={p.id}
           sertif={p.image}
@@ -98,8 +91,11 @@ export function Home() {
           number={p.number}
           classname={p.classname}
           date={p.date}/>
-        )})}</div>
-        <div>{ certificates === null || certificates.length === 0 ? <h1 style={{margin: 0}}>Tidak Ada Sertifikat</h1> : ''}
+        )})}
+        <div style={{textAlign: 'center'}}>
+          { certificates === null || certificates.length === 0 ? <h1 style={{margin: 0}}>Tidak Ada Sertifikat</h1>
+          :
+          ''}
         </div>
       </div>
     </div>

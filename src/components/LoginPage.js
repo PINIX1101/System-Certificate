@@ -7,10 +7,9 @@ import { ethers } from 'ethers';
 
 export function LoginPage(props) {
   const [dids, setDids] = useState(null); 
+  const [kategori, setKategori] = useState(null);
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('')
-
-  console.log(dids)
   
   useEffect(() => {
     window.ethereum.on('accountsChanged', function (accounts) {
@@ -38,6 +37,7 @@ export function LoginPage(props) {
   
   const handleLogin = async (e) => {
     sessionStorage.setItem('session', wallet)
+    sessionStorage.setItem('role', kategori)
     if(dids){
       sessionStorage.setItem('idname', dids[0].name);
       sessionStorage.setItem('idnim', dids[0].nim)
@@ -45,12 +45,14 @@ export function LoginPage(props) {
     window.location.reload()
   }
 
+console.log(role);
+  
   const changeRole = () => {
-    if(role==='Kaprodi'){
-      sessionStorage.setItem('role','User')
+    if(role==='Pengurus'){
+      sessionStorage.setItem('role','Mahasiswa')
     }
-    else if (role==='User'){
-      sessionStorage.setItem('role','Kaprodi')
+    else if (role==='Mahasiswa'){
+      sessionStorage.setItem('role','Pengurus')
     };
     window.location.reload()
   }
@@ -70,16 +72,30 @@ export function LoginPage(props) {
       <div className='login-left'>
         <div className='login-options'>
         </div>
-        <form onSubmit={handleLogin} className='login-form'>
-          <h1>Sign In {role==='Kaprodi'? 'Kaprodi' : 'User'}</h1>
+        <div className='login-form'>
+          <h1>Sign In {role==='Pengurus'? 'Pengurus' : 'Mahasiswa'}</h1>
           <label for='nama'>Wallet Address</label>
           <div className='input-group'>
             <input required type={'text'} name='wallet' value={wallet} id='wallet' disabled placeholder='0x123..' />
             <button type='button' onClick={connectWallet}>Connect Wallet</button>
           </div>
-          <button type='submit' className='login'>Log In</button>
-        <button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Kaprodi'? 'User' : 'Kaprodi'}</button>
-        </form>
+          {role==='Pengurus'?
+          <div>
+            <label for='nama'>Kategori Pengurus</label>
+            <div className='input-group'>
+              <select style={{width: '100%', height: 40}} value={kategori || ''} onChange={(e) => setKategori(e.target.value)}>
+                <option value=''></option>
+                <option value="Admin">Admin</option>
+                <option value="Dosen">Dosen</option>
+                <option value="Kaprodi">Kaprodi</option>
+              </select>
+            </div>
+          </div>
+          :
+          ''}
+          <button onClick={handleLogin} type='submit' className='login'>Log In</button>
+        <button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Pengurus'? 'Mahasiswa' : 'Pengurus'}</button>
+        </div>
       </div>
       <div className='login-right'>
         <img src={bg} alt='bg'/>
