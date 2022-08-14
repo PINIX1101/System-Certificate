@@ -20,8 +20,7 @@ export function DidsCheck(id) {
   const [wallet, setWallet] = useState('')
   const [dids, setDids] = useState(null); 
   const role = sessionStorage.getItem('role');
-  const session = sessionStorage.getItem('session');
-  const idname = sessionStorage.getItem('idname');
+  const session = sessionStorage.getItem('session')
   
   useEffect(() => {
     window.ethereum.on('accountsChanged', function (accounts) {

@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../assets/styles/Login.css'
-import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
-import CeramicClient from '@ceramicnetwork/http-client';
-import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
-import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
-import { DID } from 'dids';
-import { IDX } from '@ceramicstudio/idx';
-import { Link, useNavigate } from 'react-router-dom';
-
-const endpoint = 'https://ceramic-clay.3boxlabs.com';
+import { useNavigate } from 'react-router-dom';
 
 export function CreateCertificate(id) {
   const navigate = useNavigate();
@@ -20,37 +11,7 @@ export function CreateCertificate(id) {
   const [classname, setClassname] = useState('');
   const [date, setDate] = useState('');
   const [organization, setOrganization] = useState('');
-  const [wallet, setWallet] = useState('')
-  const [dids, setDids] = useState(null); 
-  const role = sessionStorage.getItem('role');
-  const session = sessionStorage.getItem('session');
   const idname = sessionStorage.getItem('idname');
-  
-  useEffect(() => {
-    window.ethereum.on('accountsChanged', function (accounts) {
-      setWallet(accounts[0])
-    });
-    connectWallet();
-    getDids();
-  }, [id])
-  
-  const getDids = async () => { 
-   try { 
-      let { data, error, status } = await supabase 
-         .from('DID') 
-         .select()
-         .match({wallet: session});
-
-      if (error && status !== 406) { 
-         throw error 
-      }
-      if (data) { 
-         setDids(data);
-      } 
-   } catch (error) {
-      alert(error.message) 
-   } 
-}
   
   const handleSubmit = async () => { 
    if( idname && date && organization ) { 
@@ -72,27 +33,6 @@ export function CreateCertificate(id) {
    } 
 }
 
-  async function connect() {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-
-    console.log('from web3modal: ', address);
-
-    return address;
-  }
-  
-  const connectWallet = async (e) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    setWallet(address);
-  }
-
   return (
     <div className='createcertificate'>
       <div className='form' style={{width: '60%', margin: 'auto'}}>
@@ -106,7 +46,7 @@ export function CreateCertificate(id) {
         <div>
           <label for='image'>Gambar</label>
           <div className='input-group'>
-             <input required value={image || ''} onChange={(e) => setImage(e.target.value)} type="text" image="image" placeholder="Gambar" />
+             <input required value={image || ''} onChange={(e) => setImage(e.target.value)} type="text" name="image" placeholder="Gambar" />
           </div>
         </div>
         <div>

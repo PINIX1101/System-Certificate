@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export function Certificate(props) {
   const navigate = useNavigate();
   const handleClick = () => { 
-    navigate(`/Transkrip/${props.code}`);
+    navigate(`/transkrip/${props.code}`);
 }
   
   return (

@@ -14,7 +14,8 @@ export function Home() {
   const idname = sessionStorage.getItem('idname');
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
-  const [certificates, setCertificates] = useState('');
+  const [certificates, setCertificates] = useState([]);
+  const [classes, setClasses] = useState([]);
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('');
   
@@ -24,16 +25,7 @@ export function Home() {
     });
     connectWallet();
     getCertificates();
-    // console.log('PUBLIC URL', process.env.PUBLIC_URL)
   })
-
-  const handleSubmit = async () => { 
-   const { data, error } = await supabase.from('DID').upsert({ 
-      wallet: wallet,
-      name: name, 
-      nim: nim, 
-   }) 
-}
   
   async function getCertificates() { 
       try { 
@@ -46,6 +38,23 @@ export function Home() {
          } 
          if (data) { 
             setCertificates(data) 
+         } 
+      } catch (error) { 
+         alert(error.message) 
+      } 
+   }
+
+  async function getClasses() { 
+      try { 
+         let { data, error, status } = await supabase 
+            .from('Kelas') 
+            .select()
+         
+         if (error && status !== 406) { 
+            throw error 
+         } 
+         if (data) { 
+            setClasses(data) 
          } 
       } catch (error) { 
          alert(error.message) 
@@ -65,9 +74,39 @@ export function Home() {
     <div className='mhs-page'>
     {role==='Mahasiswa' ? ''
       :
-      <Link to='/CreateCertificate' class='button' style={{margin: 'auto', marginTop: '50px'}}>
-      <h3>Buat Sertifikat</h3>
-      </Link>
+      <div>
+        <Link to='/CreateCertificate' class='button' style={{margin: 'auto', marginTop: '50px'}}>
+          <h3>Buat Sertifikat</h3>
+        </Link>
+        <Link to='/CreateClass' class='button' style={{margin: 'auto', marginTop: '50px'}}>
+          <h3>Buat Kelas</h3>
+        </Link>
+        <div className='list-kelas'>
+        <h3>Daftar Kelas</h3>
+          <table variant='simple'> 
+           <thead> 
+              <tr> 
+                 <th>Kode</th> 
+                 <th>Namae Kelas</th> 
+                 <th>Nama Dosen</th> 
+                 <th>Jumlah Pendaftar</th> 
+              </tr> 
+           </thead> 
+           <tbody> 
+           {classes && classes.map(function(p, i) { 
+              return ( 
+                 <tr key={i}> 
+                    <td> { p.classcode } </td> 
+                    <td> { p.classname } </td> 
+                    <td> { p.lecturername } </td> 
+                    <td> { p.count } </td> 
+                    </tr> 
+                 ); 
+              })} 
+           </tbody> 
+        </table> 
+        </div>
+      </div>
       }
       <div style={{textAlign: 'center'}}>
         <div className='sertifikat-list'>
