@@ -1,17 +1,20 @@
 import React from 'react';
-import sertif from '../../assets/image/sertif-exp.png'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function Certificate(props) {
+  const navigate = useNavigate();
+  const handleClick = () => { 
+    navigate(`/Transkrip/${props.code}`);
+}
+  
   return (
     <div className='sertif-grid'>
-      <Link to='/Transkrip'>
-        <img src={sertif} alt='sertif'/>
-      </Link>
+        <img src={props.sertif} onClick={handleClick} alt='sertif'/>
         <div className='sertif-detail'>
-          <h2>Vaksin Pertama</h2>
-          <h3>1 Januari 2022</h3>
-          <p>RSUP HASAN SADIKIN</p>
+          <h2>{ props.name }</h2>
+          <h3>{ props.number }</h3>
+          <p>{ props.classname}</p>
+          <p>{ props.date }</p>
         </div>
     </div>
   )

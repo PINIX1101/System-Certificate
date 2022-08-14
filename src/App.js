@@ -34,7 +34,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/createcertificate" element={<CreateCertificate/>} />
-              <Route path="/Transkrip" element={<Transkrip/>} />
+              <Route path="/Transkrip/:code" element={<Transkrip/>} />
               <Route path="/test" element={<Test />} />
               <Route path="/dosen" element={<LoginDosenPage/>} />
             </Routes>

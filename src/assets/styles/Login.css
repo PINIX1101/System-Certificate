@@ -62,6 +62,11 @@ form {
   flex-direction: column;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
 input[type=text] {
   width: calc(100% + 50px);
   height: 40px;

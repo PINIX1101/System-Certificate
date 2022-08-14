@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
 import '../assets/styles/home.css'
+// import sertif from '../../../assets/image/sertif-exp.png'
 
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
@@ -13,6 +14,7 @@ export function Home() {
   const idname = sessionStorage.getItem('idname');
   const [name, setName] = useState('');
   const [nim, setNim] = useState('');
+  const [certificates, setCertificates] = useState('');
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('');
   
@@ -21,6 +23,8 @@ export function Home() {
       setWallet(accounts[0])
     });
     connectWallet();
+    getCertificates();
+    // console.log('PUBLIC URL', process.env.PUBLIC_URL)
   })
 
   const handleSubmit = async () => { 
@@ -30,6 +34,23 @@ export function Home() {
       nim: nim, 
    }) 
 }
+  
+  async function getCertificates() { 
+      try { 
+         let { data, error, status } = await supabase 
+            .from('Sertifikat') 
+            .select()
+         
+         if (error && status !== 406) { 
+            throw error 
+         } 
+         if (data) { 
+            setCertificates(data) 
+         } 
+      } catch (error) { 
+         alert(error.message) 
+      } 
+   }
 
   const connectWallet = async (e) => {
     const web3Modal = new Web3Modal();
@@ -42,26 +63,27 @@ export function Home() {
 
   return (
     <div className='mhs-page'>
-      {role==='Mahasiswa' ? 
-      <div style={{textAlign: 'center'}}>
-        <h1 style={{margin: 0}}>Tidak Ada Sertifikat</h1>
-        <div className='sertifikat-list'>
-          <Certificate />
-          <Certificate />
-          <Certificate />
-          <Certificate />
-          <Certificate />
-          <Certificate />
-          <Certificate />
-          <Certificate />
-        </div>
-
-      </div>
+    {role==='Mahasiswa' ? ''
       :
       <Link to='/CreateCertificate' class='button' style={{margin: 'auto', marginTop: '50px'}}>
       <h3>Buat Sertifikat</h3>
       </Link>
       }
+      <div style={{textAlign: 'center'}}>
+        <div className='sertifikat-list'>
+          {certificates && certificates.map(function(p, i) { 
+      return (
+        <Certificate 
+          id={p.id}
+          sertif={p.image}
+          name={p.name}
+          number={p.number}
+          classname={p.classname}
+          date={p.date}/>
+        )})}</div>
+        <div>{ certificates === null || certificates.length === 0 ? <h1 style={{margin: 0}}>Tidak Ada Sertifikat</h1> : ''}
+        </div>
+      </div>
     </div>
   )
 }

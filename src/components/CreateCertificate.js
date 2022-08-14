@@ -8,12 +8,16 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
 import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
 import { DID } from 'dids';
 import { IDX } from '@ceramicstudio/idx';
+import { Link, useNavigate } from 'react-router-dom';
 
 const endpoint = 'https://ceramic-clay.3boxlabs.com';
 
 export function CreateCertificate(id) {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
+  const [image, setImage] = useState('');
   const [number, setNumber] = useState('');
+  const [classname, setClassname] = useState('');
   const [date, setDate] = useState('');
   const [organization, setOrganization] = useState('');
   const [wallet, setWallet] = useState('')
@@ -29,7 +33,7 @@ export function CreateCertificate(id) {
     connectWallet();
     getDids();
   }, [id])
-
+  
   const getDids = async () => { 
    try { 
       let { data, error, status } = await supabase 
@@ -49,11 +53,23 @@ export function CreateCertificate(id) {
 }
   
   const handleSubmit = async () => { 
-   sessionStorage.setItem('idname', name);
-   const { data, error } = await supabase.from('DID').upsert({ 
-      wallet: wallet,
-      name: name, 
-   });
+   if( idname && date && organization ) { 
+      try { 
+         const { data, error } = await supabase.from('Sertifikat').upsert({ 
+            name: idname, 
+            image: image, 
+            number: number, 
+            classname: classname, 
+            date: date, 
+            organization: organization, 
+         }) 
+         navigate("/") 
+      } catch (e) { 
+         alert(e.message); 
+      } 
+   } else { 
+      alert("Harap isi dengan lengkap"); 
+   } 
 }
 
   async function connect() {
@@ -79,12 +95,18 @@ export function CreateCertificate(id) {
 
   return (
     <div className='createcertificate'>
-      <form onSubmit={handleSubmit} style={{width: '60%', margin: 'auto'}}>
+      <div className='form' style={{width: '60%', margin: 'auto'}}>
         <h1>Buat Sertifikat</h1>
         <div>
           <label for='name'>Nama</label>
           <div className='input-group'>
              <input required value={name || ''} onChange={(e) => setName(e.target.value)} type="text" name="name" placeholder="Nama" />
+          </div>
+        </div>
+        <div>
+          <label for='image'>Gambar</label>
+          <div className='input-group'>
+             <input required value={image || ''} onChange={(e) => setImage(e.target.value)} type="text" image="image" placeholder="Gambar" />
           </div>
         </div>
         <div>
@@ -94,9 +116,15 @@ export function CreateCertificate(id) {
             </div>
         </div>
         <div>
+          <label for='classname'>Nama Kelas</label>
+            <div className='input-group'>
+              <input required value={classname || ''} onChange={(e) => setClassname(e.target.value)} type="text" name="classname" placeholder="Nama Kelas" />
+            </div>
+        </div>
+        <div>
           <label for='date'>Tanggal</label>
           <div className='input-group'>
-             <input required value={date || ''} onChange={(e) => setDate(e.target.value)} type="text" name="date" placeholder="Tanggal" />
+             <input required value={date || ''} onChange={(e) => setDate(e.target.value)} type="date" name="date" placeholder="Tanggal" />
           </div>
         </div>
         <div>
@@ -105,8 +133,8 @@ export function CreateCertificate(id) {
              <input required value={organization || ''} onChange={(e) => setOrganization(e.target.value)} type="text" name="organization" placeholder="Organisasi" />
           </div>
         </div>
-        <button type='submit' className='button'>Save</button>
-        </form>
+        <button onClick={ handleSubmit } type='submit' className='button'>Create</button>
+        </div>
     </div>
   )
 }

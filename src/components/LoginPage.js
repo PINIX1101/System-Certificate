@@ -39,7 +39,8 @@ export function LoginPage(props) {
   const handleLogin = async (e) => {
     sessionStorage.setItem('session', wallet)
     if(dids){
-      sessionStorage.setItem('idname', dids[0].name)
+      sessionStorage.setItem('idname', dids[0].name);
+      sessionStorage.setItem('idnim', dids[0].nim)
     }
     window.location.reload()
   }

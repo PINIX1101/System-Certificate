@@ -56,8 +56,9 @@ export function DidsCheck(id) {
       wallet: wallet,
       name: name, 
       nim: nim, 
-      tanggallahir: tanggallahir,
+      birthdate: tanggallahir,
       email: email,
+      category: role
    });
 }
 

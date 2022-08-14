@@ -8,50 +8,63 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
 import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
 import { DID } from 'dids';
 import { IDX } from '@ceramicstudio/idx';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const endpoint = 'https://ceramic-clay.3boxlabs.com';
 
 export function Transkrip(id) {
   const navigate = useNavigate();
   const [emailtujuan, setEmailtujuan] = useState('');
+  const [kelas, setKelas] = useState('');
   const [wallet, setWallet] = useState('')
   const [dids, setDids] = useState(null); 
   const role = sessionStorage.getItem('role');
   const session = sessionStorage.getItem('session');
   const idname = sessionStorage.getItem('idname');
+  const idnim = sessionStorage.getItem('idnim');
+  const { code } = useParams();
   
   useEffect(() => {
     window.ethereum.on('accountsChanged', function (accounts) {
-      setWallet(accounts[0])
-      getDids();
+      setWallet(accounts[0]);
     });
     connectWallet();
   }, [id])
-
-  const getDids = async () => { 
-   try { 
-      let { data, error, status } = await supabase 
-         .from('DID') 
-         .select()
-         .match({wallet: session});
-
-      if (error && status !== 406) { 
-         throw error 
-      }
-      if (data) { 
-         setDids(data);
-      } 
-   } catch (error) {
-      alert(error.message) 
-   } 
-}
   
+  async function getIsikelas() { 
+      try { 
+         let { data, error, status } = await supabase 
+            .from('Isi Kelas') 
+            .select(`classname,classcode`)
+            .match({})
+         
+         if (error && status !== 406) { 
+            throw error 
+         } 
+
+         if (data) { 
+            setKelas(data) 
+         } 
+      } catch (error) { 
+         alert(error.message) 
+      } 
+   }
+
   const handleSubmit = async () => { 
-   const { data, error } = await supabase.from('Email Transkrip').upsert({ 
-      name: idname,
-      email_transkrip: emailtujuan, 
-   });
+   if( idname && emailtujuan ) { 
+      try { 
+         const { data, error } = await supabase.from('Email Transkrip').upsert({ 
+            name: idname, 
+            nim: idnim,
+            email_transkrip: emailtujuan, 
+         }) 
+         navigate(`/`) 
+      } catch (e) { 
+         alert(e.message); 
+      } 
+   } else { 
+      alert("Harap isi dengan lengkap"); 
+   } 
 }
 
   async function connect() {
@@ -77,16 +90,16 @@ export function Transkrip(id) {
 
   return (
     <div className='didscheck'>
-      <form onSubmit={handleSubmit} style={{width: '60%', margin: 'auto'}}>
+      <div className='form' style={{width: '60%', margin: 'auto'}}>
           <h1>Kirim Transkrip</h1>
         <div>
-          <label for='emailtujuan'>Silahkan tulis email tujuan</label>
+          <label for='emailtujuan'>Silahkan Tulis Email Kaprodi</label>
             <div className='input-group'>
               <input required value={emailtujuan || ''} onChange={(e) => setEmailtujuan(e.target.value)} type="text" name="emailtujuan" placeholder="Email Tujuan" />
             </div>
         </div>
-        <button type='submit' className='button'>Kirim</button>
-        </form>
+        <button className='button' onClick={ handleSubmit }>Kirim</button>
+        </div>
     </div>
   )
 }
