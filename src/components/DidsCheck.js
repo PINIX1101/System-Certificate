@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
-import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
-import CeramicClient from '@ceramicnetwork/http-client';
-import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
-import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
-import { DID } from 'dids';
-import { IDX } from '@ceramicstudio/idx';
-
-const endpoint = 'https://ceramic-clay.3boxlabs.com';
+// import Web3Modal from 'web3modal';
+// import { ethers } from 'ethers';
+// import CeramicClient from '@ceramicnetwork/http-client';
+// import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
+// import { EthereumAuthProvider, ThreeIdConnect } from '@3id/connect';
+// import { DID } from 'dids';
+// import { IDX } from '@ceramicstudio/idx';
+// 
+// const endpoint = 'https://ceramic-clay.3boxlabs.com';
 
 export function DidsCheck(id) {
   const [name, setName] = useState('');
@@ -22,34 +22,34 @@ export function DidsCheck(id) {
   const role = sessionStorage.getItem('role');
   const session = sessionStorage.getItem('session')
   
-  useEffect(() => {
-    window.ethereum.on('accountsChanged', function (accounts) {
-      setWallet(accounts[0])
-      getDids();
-    });
-    connectWallet();
-  }, [id])
+  // useEffect(() => {
+  //   window.ethereum.on('accountsChanged', function (accounts) {
+  //     setWallet(accounts[0])
+  //     getDids();
+  //   });
+  //   connectWallet();
+  // }, [id])
 
-  const getDids = async () => { 
-   try { 
-      let { data, error, status } = await supabase 
-         .from('DID') 
-         .select()
-         .match({wallet: session});
+//   const getDids = async () => { 
+//    try { 
+//       let { data, error, status } = await supabase 
+//          .from('DID') 
+//          .select()
+//          .match({wallet: session});
 
-      if (error && status !== 406) { 
-         throw error 
-      }
-      if (data) { 
-         setDids(data);
-      } 
-   } catch (error) {
-      alert(error.message) 
-   } 
-}
+//       if (error && status !== 406) { 
+//          throw error 
+//       }
+//       if (data) { 
+//          setDids(data);
+//       } 
+//    } catch (error) {
+//       alert(error.message) 
+//    } 
+// }
   
   const handleSubmit = async () => { 
-   updateProfile()
+   // updateProfile()
    sessionStorage.setItem('idname', name);
    const { data, error } = await supabase.from('DID').upsert({ 
       wallet: wallet,
@@ -57,68 +57,67 @@ export function DidsCheck(id) {
       nim: nim, 
       birthdate: tanggallahir,
       email: email,
-      category: role
    });
 }
 
-  async function connect() {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
+  // async function connect() {
+  //   const web3Modal = new Web3Modal();
+  //   const connection = await web3Modal.connect();
+  //   const provider = new ethers.providers.Web3Provider(connection);
+  //   const signer = provider.getSigner();
+  //   const address = await signer.getAddress();
 
-    console.log('from web3modal: ', address);
+  //   console.log('from web3modal: ', address);
 
-    return address;
-  }
+  //   return address;
+  // }
 
-  async function updateProfile() {
-    if(typeof window.ethereum !== 'undefined') {
-      const address = await connect();
+  // async function updateProfile() {
+  //   if(typeof window.ethereum !== 'undefined') {
+  //     const address = await connect();
 
-      const ceramic = new CeramicClient(endpoint);
-      const threeIdConnect = new ThreeIdConnect();
+  //     const ceramic = new CeramicClient(endpoint);
+  //     const threeIdConnect = new ThreeIdConnect();
 
-      if (typeof address !== 'undefined') {
-        const provider = new EthereumAuthProvider(window.ethereum, address);
+  //     if (typeof address !== 'undefined') {
+  //       const provider = new EthereumAuthProvider(window.ethereum, address);
 
-        console.log('writing:', address);
+  //       console.log('writing:', address);
 
-        await threeIdConnect.connect(provider);
+  //       await threeIdConnect.connect(provider);
 
-        const did = new DID({
-          provider: threeIdConnect.getDidProvider(),
-          resolver: { ...ThreeIdResolver.getResolver(ceramic) },
-        });
+  //       const did = new DID({
+  //         provider: threeIdConnect.getDidProvider(),
+  //         resolver: { ...ThreeIdResolver.getResolver(ceramic) },
+  //       });
 
-        ceramic.setDID(did);
-        await ceramic.did.authenticate();
+  //       ceramic.setDID(did);
+  //       await ceramic.did.authenticate();
 
-        const idx = new IDX({ ceramic });
+  //       const idx = new IDX({ ceramic });
 
-        await idx.set('basicProfile', {
-          name,
-          avatar: image,
-        });
+  //       await idx.set('basicProfile', {
+  //         name,
+  //         avatar: image,
+  //       });
 
-        console.log('Profile updated!');
-      } else {
-        window.alert('Please install MetaMask');
-      }
-    } else {
-      window.alert('Please install MetaMask');
-    }
-  }
+  //       console.log('Profile updated!');
+  //     } else {
+  //       window.alert('Please install MetaMask');
+  //     }
+  //   } else {
+  //     window.alert('Please install MetaMask');
+  //   }
+  // }
   
-  const connectWallet = async (e) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    setWallet(address);
-  }
+  // const connectWallet = async (e) => {
+  //   const web3Modal = new Web3Modal();
+  //   const connection = await web3Modal.connect();
+  //   const provider = new ethers.providers.Web3Provider(connection);
+  //   const signer = provider.getSigner();
+  //   const address = await signer.getAddress();
+  //   setWallet(address);
+  // }
 
   return (
     <div className='didscheck'>

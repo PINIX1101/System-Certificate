@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
-import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -9,8 +7,6 @@ export function Transkrip(id) {
   const navigate = useNavigate();
   const [emailtujuan, setEmailtujuan] = useState('');
   const [kelas, setKelas] = useState('');
-  const [wallet, setWallet] = useState('')
-  const [dids, setDids] = useState(null); 
   const role = sessionStorage.getItem('role');
   const session = sessionStorage.getItem('session');
   const idname = sessionStorage.getItem('idname');

@@ -46,11 +46,11 @@ export function LoginPage(props) {
   }
 
   const changeRole = () => {
-    if(role==='Dosen'){
-      sessionStorage.setItem('role','Mahasiswa')
+    if(role==='Kaprodi'){
+      sessionStorage.setItem('role','User')
     }
-    else if (role==='Mahasiswa'){
-      sessionStorage.setItem('role','Dosen')
+    else if (role==='User'){
+      sessionStorage.setItem('role','Kaprodi')
     };
     window.location.reload()
   }
@@ -71,14 +71,14 @@ export function LoginPage(props) {
         <div className='login-options'>
         </div>
         <form onSubmit={handleLogin} className='login-form'>
-          <h1>Sign In {role==='Dosen'? 'Dosen' : 'Mahasiswa'}</h1>
+          <h1>Sign In {role==='Kaprodi'? 'Kaprodi' : 'User'}</h1>
           <label for='nama'>Wallet Address</label>
           <div className='input-group'>
             <input required type={'text'} name='wallet' value={wallet} id='wallet' disabled placeholder='0x123..' />
             <button type='button' onClick={connectWallet}>Connect Wallet</button>
           </div>
           <button type='submit' className='login'>Log In</button>
-        <button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Dosen'? 'Mahasiswa' : 'Dosen'}</button>
+        <button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Kaprodi'? 'User' : 'Kaprodi'}</button>
         </form>
       </div>
       <div className='login-right'>

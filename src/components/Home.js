@@ -1,31 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Login.css'
 import '../assets/styles/home.css'
-// import sertif from '../../../assets/image/sertif-exp.png'
-
-import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
 import { supabase } from '../supabaseClient';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Certificate } from './widgets/Certificate';
 
 export function Home() {
-  const navigate = useNavigate();
-  const idname = sessionStorage.getItem('idname');
-  const [name, setName] = useState('');
-  const [nim, setNim] = useState('');
   const [certificates, setCertificates] = useState([]);
   const [classes, setClasses] = useState([]);
   const role = sessionStorage.getItem('role');
-  const [wallet, setWallet] = useState('');
   
   useEffect(() => {
-    window.ethereum.on('accountsChanged', function (accounts) {
-      setWallet(accounts[0])
-    });
-    connectWallet();
     getCertificates();
   })
+
+  console.log(classes);
   
   async function getCertificates() { 
       try { 
@@ -49,7 +38,6 @@ export function Home() {
          let { data, error, status } = await supabase 
             .from('Kelas') 
             .select()
-         
          if (error && status !== 406) { 
             throw error 
          } 
@@ -60,15 +48,6 @@ export function Home() {
          alert(error.message) 
       } 
    }
-
-  const connectWallet = async (e) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    setWallet(address);
-  }
 
   return (
     <div className='mhs-page'>
@@ -87,19 +66,19 @@ export function Home() {
            <thead> 
               <tr> 
                  <th>Kode</th> 
-                 <th>Namae Kelas</th> 
+                 <th>Nama Kelas</th> 
                  <th>Nama Dosen</th> 
                  <th>Jumlah Pendaftar</th> 
               </tr> 
            </thead> 
            <tbody> 
-           {classes && classes.map(function(p, i) { 
+           {classes && classes.map(function(q, i) { 
               return ( 
-                 <tr key={i}> 
-                    <td> { p.classcode } </td> 
-                    <td> { p.classname } </td> 
-                    <td> { p.lecturername } </td> 
-                    <td> { p.count } </td> 
+                 <tr> 
+                    <td> { q.classcode } </td> 
+                    <td> { q.classname } </td> 
+                    <td> { q.lecturername } </td> 
+                    <td> { q.count } </td> 
                     </tr> 
                  ); 
               })} 
@@ -113,7 +92,7 @@ export function Home() {
           {certificates && certificates.map(function(p, i) { 
       return (
         <Certificate 
-          id={p.id}
+          code={p.id}
           sertif={p.image}
           name={p.name}
           number={p.number}

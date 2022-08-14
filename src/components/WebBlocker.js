@@ -4,26 +4,26 @@ import teacher from '../assets/image/teacher.png'
 import student from '../assets/image/student.png'
 
 export function WebBlocker() {
-  const handleDosen = () => {
-    sessionStorage.setItem('role','Dosen')
+  const handlePengurus = () => {
+    sessionStorage.setItem('role','Kaprodi')
     window.location.reload()
   }
 
   const handleMahasiswa = () => {
-    sessionStorage.setItem('role','Mahasiswa')
+    sessionStorage.setItem('role','User')
     window.location.reload()
   }
   
   return (
     <div className='web-blocker'>
       <div className='login'>
-        <button className='button-login' onClick={handleDosen}>
+        <button className='button-login' onClick={handlePengurus}>
           <img src={teacher} alt='teacher' />
-          <h2>Masuk sebagai Dosen</h2>
+          <h2>Masuk sebagai Kaprodi</h2>
         </button>
         <button className='button-login' style={{backgroundColor: "cadetBlue"}} onClick={handleMahasiswa}>
           <img src={student} alt='student' />
-          <h2>Masuk sebagai Mahasiswa</h2>
+          <h2>Masuk sebagai User</h2>
         </button>
       </div>
     </div>
