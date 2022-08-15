@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
-import '../../assets/styles/Header.css'
+import '../../assets/styles/Header.css' 
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
+  const navigate = useNavigate();
   const idname = sessionStorage.getItem('idname');
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('')
@@ -13,9 +15,7 @@ export function Header() {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    document.body.onclick = function() {
-      window.location.reload();
-    }
+    window.location.reload();
   }
   
   useEffect(() => {
@@ -55,20 +55,41 @@ export function Header() {
     setBalance(`${result.toString()} ${getChainDetail(currency.chainId).nativeCurrency.symbol}`)
   }
 
+  const handleSertif = () => {
+    navigate('/');
+  }
+
+  const handleKelas = () => {
+    navigate('/Kelas');
+  }
+    
+  const handleTranskrip = () => {
+    navigate('/DataTranskrip');
+  }
+  
   const getChainDetail = (chainId) => {
     const detail = json.find(item => item.chainId === chainId)
     return detail
   }
   
   return (
-    <header>
+    <header style={{marginBottom:'30px'}}>
       <h1>{role}</h1>
       <div className='account' onClick={() => setLogout(!logout)}>
         <h3>{idname}</h3>
         <p>{wallet}</p>
         <p>{balance}</p>
         <div className='dropdown-logout' style={{cursor: 'pointer', display: !logout? 'none': 'block'}}>
-          <button onClick={handleLogout}>
+          <button style={{margin:'2px'}} onClick={handleSertif}>
+            Sertifikat
+          </button>
+          <button style={{margin:'2px'}} onClick={handleKelas}>
+            Kelas
+          </button>
+          <button style={{margin:'2px'}} onClick={handleTranskrip}>
+            Transkrip
+          </button>
+          <button style={{margin:'2px'}} onClick={handleLogout}>
             Logout
           </button>
         </div>

@@ -17,16 +17,16 @@ export function CreateCertificate(id) {
    if( idname && date && organization ) { 
       try { 
          const { data, error } = await supabase.from('Sertifikat').upsert({ 
-            name: idname, 
+            name: name, 
             image: image, 
             number: number, 
             classname: classname, 
             date: date, 
             organization: organization, 
          }) 
-         navigate("/") 
+         sessionStorage.setItem('numbersertif',number);
+         navigate("/isitranskrip") 
       } catch (e) { 
-         alert(e.message); 
       } 
    } else { 
       alert("Harap isi dengan lengkap"); 

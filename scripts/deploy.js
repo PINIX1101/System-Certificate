@@ -1,7 +1,5 @@
 const hre = require("hardhat");
 
- 
-
 async function main() {
 
   [owner] = await ethers.getSigners();

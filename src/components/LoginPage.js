@@ -4,8 +4,10 @@ import '../assets/styles/Login.css'
 import bg from '../assets/image/login-bg.jpg'
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginPage(props) {
+  const navigate = useNavigate();
   const [dids, setDids] = useState(null); 
   const [kategori, setKategori] = useState(null);
   const role = sessionStorage.getItem('role');
@@ -31,18 +33,20 @@ export function LoginPage(props) {
          setDids(data);
       } 
    } catch (error) {
-      alert(error.message) 
    } 
 }
   
-  const handleLogin = async (e) => {
+  const handleLogin = () => {
     sessionStorage.setItem('session', wallet)
-    sessionStorage.setItem('role', kategori)
-    if(dids){
-      sessionStorage.setItem('idname', dids[0].name);
-      sessionStorage.setItem('idnim', dids[0].nim)
+    if(role==='Pengurus'){
+      sessionStorage.setItem('role', kategori)
     }
     window.location.reload()
+    if(dids){
+      sessionStorage.setItem('idname', dids[0].name);
+      sessionStorage.setItem('idnim', dids[0].nim);
+      sessionStorage.setItem('idemail', dids[0].email)
+    }
   }
 
 console.log(role);

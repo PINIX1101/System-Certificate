@@ -27,8 +27,7 @@ export function Transkrip(id) {
          if (data) { 
             setKelas(data) 
          } 
-      } catch (error) { 
-         alert(error.message) 
+      } catch (e) { 
       } 
    }
 
@@ -36,13 +35,13 @@ export function Transkrip(id) {
    if( idname && emailtujuan ) { 
       try { 
          const { data, error } = await supabase.from('Email Transkrip').upsert({ 
-            name: idname, 
+            numbersertif: code, 
+            name: idname,
             nim: idnim,
             email_transkrip: emailtujuan, 
          }) 
          navigate(`/`) 
       } catch (e) { 
-         alert(e.message); 
       } 
    } else { 
       alert("Harap isi dengan lengkap"); 

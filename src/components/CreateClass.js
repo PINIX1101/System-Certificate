@@ -19,7 +19,6 @@ export function CreateClass(id) {
          }) 
          navigate("/") 
       } catch (e) { 
-         alert(e.message); 
       } 
    } else { 
       alert("Harap isi dengan lengkap"); 
