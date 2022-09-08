@@ -21,8 +21,9 @@ header h1, h2, h3, p {
 
 .dropdown-logout {
   position: absolute;
-  bottom: -65px;
+  bottom: -135px;
   padding: 10px;
+  flex-direction: column;
   border: 1px solid #ccc;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import '../../assets/styles/Header.css' 
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
@@ -79,7 +79,7 @@ export function Header() {
         <h3>{idname}</h3>
         <p>{wallet}</p>
         <p>{balance}</p>
-        <div className='dropdown-logout' style={{cursor: 'pointer', display: !logout? 'none': 'block'}}>
+        <div className='dropdown-logout' style={{cursor: 'pointer', display: !logout? 'none': 'flex'}}>
           <button style={{margin:'2px'}} onClick={handleSertif}>
             Sertifikat
           </button>

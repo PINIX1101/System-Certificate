@@ -38,7 +38,7 @@ export function DataTranskrip(id) {
      <div className='mhs-page'>
       {role==='Kaprodi'?
         <div className='list-kelas'>
-          <h2 style={{marginLeft:'50px'}}> Daftar Kelas</h2>
+          <h2 style={{marginLeft:'50px'}}> Data Transkrip</h2>
           <table className='kelas' variant='simple'> 
            <thead> 
               <tr> 
