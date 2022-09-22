@@ -8,10 +8,6 @@ export function DataTranskrip(id) {
   const [emailtujuan, setEmailtujuan] = useState('');
   const [datatranskrip, setDatatranskrip] = useState('');
   const role = sessionStorage.getItem('role');
-  const session = sessionStorage.getItem('session');
-  const idname = sessionStorage.getItem('idname');
-  const idnim = sessionStorage.getItem('idnim');
-  const { code } = useParams();
 
   useEffect(() => {
     getIsitranskrip();
@@ -36,7 +32,7 @@ export function DataTranskrip(id) {
   
   return (
      <div className='mhs-page'>
-      {role==='Kaprodi'?
+      {/* {role==='Kaprodi'? */}
         <div className='list-kelas'>
           <h2 style={{marginLeft:'50px'}}> Data Transkrip</h2>
           <table className='kelas' variant='simple'> 
@@ -59,11 +55,11 @@ export function DataTranskrip(id) {
            </tbody> 
           </table> 
         </div>
-        :
+        {/* : */}
       <div style={{textAlign: 'center'}}>
         <h1 style={{margin: 0}}>Anda Bukan Kaprodi</h1>
       </div>
-      }
+      {/* } */}
     </div>
   )
 }

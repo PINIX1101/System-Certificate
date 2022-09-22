@@ -6,10 +6,47 @@ import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import { useNavigate } from 'react-router-dom';
 
+function FormMahasiswa(props) {
+  return (
+    <>
+      <label for='nama'>Wallet Address</label>
+      <div className='input-group'>
+        <input required type={'text'} name='wallet' value={props.wallet} id='wallet' disabled placeholder='0x123..' />
+        <button type='button' onClick={props.connectWallet}>Connect Wallet</button>
+      </div>
+    </>
+  )
+}
+
+function FormKaprodi(props) {
+  return (
+    <>
+      <label for='nama'>Email Address</label>
+      <div className='input-group'>
+        <input required type={'text'} name='email' onChange={(e) => props.onChange(e.target.value)} id='email' placeholder='' />
+      </div>
+    </>
+  )
+}
+
+function FormHeader(props) {
+  switch(props.role) {
+    case 'Pengurus':
+      return(<h1>Administrator Sistem</h1>)
+    case 'Kaprodi':
+      return(<h1>Perwakilan Prodi</h1>)
+    case 'Mahasiswa':
+      return(<h1>Peserta Program</h1>)
+    default:
+      return(<h1><i>Guest</i></h1>)
+  }
+}
+
 export function LoginPage(props) {
   const navigate = useNavigate();
   const [dids, setDids] = useState(null); 
   const [kategori, setKategori] = useState(null);
+  const [email, setEmail] = useState('');
   const role = sessionStorage.getItem('role');
   const [wallet, setWallet] = useState('')
   
@@ -49,7 +86,23 @@ export function LoginPage(props) {
     }
   }
 
-console.log(role);
+  const handleKaprodiLogin = async () => {
+    console.log('Login Kaprodi')
+    const { user, error } = await supabase.auth.signIn({
+      email: email,
+    })
+    if (error) {
+      alert(error.message)
+    } else {
+      alert('Login Success')
+      sessionStorage.setItem('session', email)
+      sessionStorage.setItem('idname', email)
+      sessionStorage.setItem('role', 'Kaprodi')
+      window.location.reload()
+    }
+  }
+
+// console.log(role);
   
   const changeRole = () => {
     if(role==='Pengurus'){
@@ -77,28 +130,25 @@ console.log(role);
         <div className='login-options'>
         </div>
         <div className='login-form'>
-          <h1>Sign In {role==='Pengurus'? 'Pengurus' : 'Mahasiswa'}</h1>
-          <label for='nama'>Wallet Address</label>
-          <div className='input-group'>
-            <input required type={'text'} name='wallet' value={wallet} id='wallet' disabled placeholder='0x123..' />
-            <button type='button' onClick={connectWallet}>Connect Wallet</button>
-          </div>
+          <FormHeader role={role}/>
+          {role==='Kaprodi'? <FormKaprodi onChange={setEmail} /> : <FormMahasiswa wallet={wallet} connectWallet={connectWallet}/>}
           {role==='Pengurus'?
           <div>
             <label for='nama'>Kategori Pengurus</label>
             <div className='input-group'>
               <select style={{width: '100%', height: 40}} value={kategori || ''} onChange={(e) => setKategori(e.target.value)}>
                 <option value=''></option>
-                <option value="Admin">Admin</option>
-                <option value="Dosen">Dosen</option>
-                <option value="Kaprodi">Kaprodi</option>
+                <option value="Admin">Administrator Sistem</option>
+                <option value="Dosen">Pengajar</option>
               </select>
             </div>
           </div>
           :
           ''}
-          <button onClick={handleLogin} type='submit' className='login'>Log In</button>
-        <button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Pengurus'? 'Mahasiswa' : 'Pengurus'}</button>
+          <button onClick={role==='Kaprodi'? handleKaprodiLogin : handleLogin} type='submit' className='login'>Masuk</button>
+        {role==='Kaprodi'?
+        '':<button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Pengurus'? 'Peserta Program' : 'Administrator Sistem'}</button>
+        }
         </div>
       </div>
       <div className='login-right'>

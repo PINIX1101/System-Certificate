@@ -71,23 +71,23 @@ export function DidsCheck(id) {
       const threeIdConnect = new ThreeIdConnect();
 
       if (typeof address !== 'undefined') {
-        const provider = new EthereumAuthProvider(window.ethereum, address);
+        // const provider = new EthereumAuthProvider(window.ethereum, address);
 
-        console.log('writing:', address);
+        // console.log('writing:', address);
 
-        await threeIdConnect.connect(provider);
+        // await threeIdConnect.connect(provider);
 
-        const did = new DID({
-          provider: threeIdConnect.getDidProvider(),
-          resolver: { ...ThreeIdResolver.getResolver(ceramic) },
-        });
-        ceramic.setDID(did);
-        await ceramic.did.authenticate();
-        const idx = new IDX({ ceramic });
-        await idx.set('basicProfile', {
-          name,
-          avatar: image,
-        });
+        // const did = new DID({
+        //   provider: threeIdConnect.getDidProvider(),
+        //   resolver: { ...ThreeIdResolver.getResolver(ceramic) },
+        // });
+        // ceramic.setDID(did);
+        // await ceramic.did.authenticate();
+        // const idx = new IDX({ ceramic });
+        // await idx.set('basicProfile', {
+        //   name,
+        //   avatar: image,
+        // });
 
         sessionStorage.setItem('idname', name);
         const { data, error } = await supabase.from('DID').upsert({ 
@@ -97,6 +97,7 @@ export function DidsCheck(id) {
           birthdate: tanggallahir,
           email: email,
        });
+       window.location.reload()
       } else {
         window.alert('Please install MetaMask');
       }

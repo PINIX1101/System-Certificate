@@ -13,7 +13,7 @@ export function Certificate(props) {
         <div className='sertif-detail'>
           <h2>{ props.name }</h2>
           <h3>{ props.number }</h3>
-          <p>{ props.classname}</p>
+          <p>{ props.classcode} { props.classname}</p>
           <p>{ props.date }</p>
         </div>
     </div>

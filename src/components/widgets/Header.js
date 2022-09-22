@@ -74,7 +74,9 @@ export function Header() {
   
   return (
     <header style={{marginBottom:'30px'}}>
-      <h1>{role}</h1>
+      <h1>Sertifikat
+        {/* {role} */}
+        </h1>
       <div className='account' onClick={() => setLogout(!logout)}>
         <h3>{idname}</h3>
         <p>{wallet}</p>
@@ -86,9 +88,9 @@ export function Header() {
           <button style={{margin:'2px'}} onClick={handleKelas}>
             Kelas
           </button>
-          <button style={{margin:'2px'}} onClick={handleTranskrip}>
+          {role==='Kaprodi' ? <button style={{margin:'2px'}} onClick={handleTranskrip}>
             Transkrip
-          </button>
+          </button>: null}
           <button style={{margin:'2px'}} onClick={handleLogout}>
             Logout
           </button>

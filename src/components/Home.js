@@ -9,6 +9,7 @@ export function Home() {
   const [certificates, setCertificates] = useState([]);
   const [classes, setClasses] = useState([]);
   const role = sessionStorage.getItem('role');
+  const idnim = sessionStorage.getItem('idnim');
   
   useEffect(() => {
     getCertificates();
@@ -19,6 +20,7 @@ export function Home() {
          let { data, error, status } = await supabase 
             .from('Sertifikat') 
             .select()
+            .match({nim: idnim});
          if (error && status !== 406) { 
             throw error 
          } 
@@ -46,6 +48,7 @@ export function Home() {
           name={p.name}
           number={p.number}
           classname={p.classname}
+          classcode={p.classcode}
           date={p.date}/>
         )})}
         <div style={{textAlign: 'center'}}>

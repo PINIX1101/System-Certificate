@@ -8,7 +8,7 @@ import { Sertifikat } from './components/Sertifikat';
 import { Kaprodi } from './components/Kaprodi';
 import { Kelas } from './components/Kelas';
 import { IsiTranskrip } from './components/IsiTranskrip';
-import { DataTranskrip } from './components/DataTranskrip';
+import { DataTranskrip } from './components/LamanKaprodi';
 import { CreateCertificate } from './components/CreateCertificate';
 import { CreateClass } from './components/CreateClass';
 import { Transkrip } from './components/Transkrip';
