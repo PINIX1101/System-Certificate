@@ -8,7 +8,7 @@ import { Sertifikat } from './components/Sertifikat';
 import { Kaprodi } from './components/Kaprodi';
 import { Kelas } from './components/Kelas';
 import { IsiTranskrip } from './components/IsiTranskrip';
-import { DataTranskrip } from './components/LamanKaprodi';
+import { DataTranskrip } from './components/DataTranskrip';
 import { CreateCertificate } from './components/CreateCertificate';
 import { CreateClass } from './components/CreateClass';
 import { Transkrip } from './components/Transkrip';
@@ -40,7 +40,7 @@ function App() {
               <Route path="/" element={<Home/>} />
               <Route path="/admin" element={<Admin/>} />
               <Route path="/isitranskrip" element={<IsiTranskrip/>} />
-              <Route path="/datatranskrip" element={<DataTranskrip/>} />
+              <Route path="/datatranskrip/:code" element={<DataTranskrip/>} />
               <Route path="/kelas" element={<Kelas/>} />
               <Route path="/kaprodi" element={<Kaprodi/>} />
               <Route path="/sertifikat" element={<Sertifikat/>} />

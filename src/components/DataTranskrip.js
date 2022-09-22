@@ -8,6 +8,7 @@ export function DataTranskrip(id) {
   const [emailtujuan, setEmailtujuan] = useState('');
   const [datatranskrip, setDatatranskrip] = useState('');
   const role = sessionStorage.getItem('role');
+  const { code } = useParams();
 
   useEffect(() => {
     getIsitranskrip();
@@ -18,6 +19,7 @@ export function DataTranskrip(id) {
          let { data, error, status } = await supabase 
             .from('Isi Transkrip') 
             .select()
+            .match({number: code})
          
          if (error && status !== 406) { 
             throw error 
@@ -32,13 +34,12 @@ export function DataTranskrip(id) {
   
   return (
      <div className='mhs-page'>
-      {/* {role==='Kaprodi'? */}
+      {role==='Kaprodi'?
         <div className='list-kelas'>
-          <h2 style={{marginLeft:'50px'}}> Data Transkrip</h2>
+          <h2 style={{marginLeft:'50px'}}>{code}</h2>
           <table className='kelas' variant='simple'> 
            <thead> 
               <tr> 
-                 <th>Nomor Sertifikat</th> 
                  <th>Subjek</th> 
                  <th>Nilai</th> 
               </tr> 
@@ -47,19 +48,18 @@ export function DataTranskrip(id) {
            {datatranskrip && datatranskrip.map(function(q, i) { 
             return ( 
                <tr style={{textAlign: 'center'}}> 
-                  <td> { q.number } </td> 
-                  <td> { q.subject } </td> 
+                  <td style={{textAlign: 'left', marginLeft: '50'}}> { q.subject }</td> 
                   <td> { q.score } </td> 
                   </tr> 
                );})} 
            </tbody> 
           </table> 
         </div>
-        {/* : */}
+        :
       <div style={{textAlign: 'center'}}>
         <h1 style={{margin: 0}}>Anda Bukan Kaprodi</h1>
       </div>
-      {/* } */}
+      }
     </div>
   )
 }

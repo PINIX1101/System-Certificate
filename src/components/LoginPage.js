@@ -32,7 +32,7 @@ function FormKaprodi(props) {
 function FormHeader(props) {
   switch(props.role) {
     case 'Pengurus':
-      return(<h1>Administrator Sistem</h1>)
+      return(<h1>Pengurus</h1>)
     case 'Kaprodi':
       return(<h1>Perwakilan Prodi</h1>)
     case 'Mahasiswa':
@@ -147,7 +147,7 @@ export function LoginPage(props) {
           ''}
           <button onClick={role==='Kaprodi'? handleKaprodiLogin : handleLogin} type='submit' className='login'>Masuk</button>
         {role==='Kaprodi'?
-        '':<button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Pengurus'? 'Peserta Program' : 'Administrator Sistem'}</button>
+        '':<button className='login' onClick={changeRole} style={{backgroundColor: "cadetBlue"}}>Masuk sebagai {role==='Pengurus'? 'Peserta Program' : 'Pengurus'}</button>
         }
         </div>
       </div>

@@ -5,33 +5,35 @@ import { supabase } from '../supabaseClient';
 import { Link } from 'react-router-dom';
 import { Certificate } from './widgets/Certificate';
 
+export function Transkrip(props) {
+  const navigate = useNavigate();
+  const handleClick = () => { 
+    navigate(`/isitranskrip/${props.code}`);
+}
+  return (
+    <div className='sertif-grid'>
+        <img src={props.sertif} onClick={handleClick} alt='sertif'/>
+        <div className='sertif-detail'>
+          <h2>{ props.name }</h2>
+          <h3>{ props.number }</h3>
+          <p>{ props.classcode} { props.classname}</p>
+          <p>{ props.date }</p>
+        </div>
+    </div>
+  )
+}
+
 export function Home() {
   const [certificates, setCertificates] = useState([]);
-  const [email, setEmail] = useState([]);
   const [classes, setClasses] = useState([]);
   const role = sessionStorage.getItem('role');
   const idnim = sessionStorage.getItem('idnim');
-  const idname = sessionStorage.getItem('idname');
   
   useEffect(() => {
     getCertificates();
   })
   
-  async function getCertificates() {
-    if(role === 'Kaprodi') {
-      try { 
-         let { data, error, status } = await supabase 
-            .from('Email Transkrip') 
-            .select('numbersertif')
-            .match({email_transkrip: idname})
-         if (error && status !== 406) { 
-            throw error 
-         } 
-         if (data) { 
-            setEmail(data);
-         } 
-      } catch (error) { 
-      } ;
+  async function getCertificates() { 
       try { 
          let { data, error, status } = await supabase 
             .from('Sertifikat') 
@@ -44,21 +46,6 @@ export function Home() {
          } 
       } catch (error) { 
       } 
-    } else {
-      try { 
-         let { data, error, status } = await supabase 
-            .from('Sertifikat') 
-            .select()
-            .match({nim: idnim});
-         if (error && status !== 406) { 
-            throw error 
-         } 
-         if (data) { 
-            setCertificates(data) 
-         } 
-      } catch (error) { 
-      } 
-      }
    }
 
   return (
@@ -72,7 +59,7 @@ export function Home() {
       :''}
       <div className='sertifikat-list'>
       {certificates && certificates.map(function(p, i) { return (
-        <Certificate 
+        <Transkrip 
           code={p.id}
           sertif={p.image}
           name={p.name}

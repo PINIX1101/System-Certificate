@@ -2,9 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function Certificate(props) {
+  const role = sessionStorage.getItem('role');
   const navigate = useNavigate();
   const handleClick = () => { 
-    navigate(`/transkrip/${props.code}`);
+    if(role === 'Kaprodi'){
+      navigate(`/datatranskrip/${props.number}`)
+    } else {
+      navigate(`/transkrip/${props.number}`);
+  }
 }
   
   return (

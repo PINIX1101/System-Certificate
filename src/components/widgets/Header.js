@@ -79,8 +79,13 @@ export function Header() {
         </h1>
       <div className='account' onClick={() => setLogout(!logout)}>
         <h3>{idname}</h3>
+        {role==='Kaprodi'? ''
+        :
+        <div>
         <p>{wallet}</p>
         <p>{balance}</p>
+        </div>
+        }
         <div className='dropdown-logout' style={{cursor: 'pointer', display: !logout? 'none': 'flex'}}>
           <button style={{margin:'2px'}} onClick={handleSertif}>
             Sertifikat
